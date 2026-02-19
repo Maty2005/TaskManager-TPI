@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.DTOs;
 using TaskManager.Application.Interfaces.IServices;
-
 namespace TaskManager.API.Controllers
 {
     [Route("api/[controller]")]
@@ -10,12 +9,10 @@ namespace TaskManager.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -29,7 +26,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al obtener categorías", error = ex.Message });
             }
         }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
@@ -39,7 +35,6 @@ namespace TaskManager.API.Controllers
 
                 if (category == null)
                     return NotFound(new { message = "Categoría no encontrada" });
-
                 return Ok(category);
             }
             catch (Exception ex)
@@ -47,7 +42,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al obtener categoría", error = ex.Message });
             }
         }
-
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
@@ -66,7 +60,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al crear categoría", error = ex.Message });
             }
         }
-
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] CreateCategoryDto updateCategoryDto)
@@ -85,7 +78,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al actualizar categoría", error = ex.Message });
             }
         }
-
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteCategory(int id)

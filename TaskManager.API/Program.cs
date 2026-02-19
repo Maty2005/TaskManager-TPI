@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Any;
 using System.Text;
 using TaskManager.Application.Interfaces.IRepositories;
 using TaskManager.Application.Interfaces.IServices;
@@ -11,30 +10,30 @@ using TaskManager.Infrastructure.Data;
 using TaskManager.Infrastructure.ExternalServices;
 using TaskManager.Infrastructure.Repositories;
 using TaskManager.Infrastructure.Services;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configurar DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Registrar Repositorios
+// 2️⃣ Registrar Repositorios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITaskCommentRepository, TaskCommentRepository>();
 
-// 3. Registrar Servicios de Aplicación
+// 3️⃣ Registrar Servicios de Aplicación
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITaskCommentService, TaskCommentService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-// 4. Registrar HttpClient para servicio externo
+// 4️⃣ Registrar HttpClient para servicio externo
 builder.Services.AddHttpClient<IQuoteService, QuoteService>();
 
-// 5. Configurar JWT Authentication
+// 5️⃣ Configurar JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["Secret"];
 
@@ -53,11 +52,12 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!))
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(secretKey!))
     };
 });
 
-// 6. Configurar CORS
+// 6️⃣ Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -68,10 +68,10 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 7. Agregar Controllers
+// 7️⃣ Agregar Controllers
 builder.Services.AddControllers();
 
-// 8. Configurar Swagger con soporte JWT
+// 8️⃣ Configurar Swagger con soporte JWT
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -82,16 +82,17 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API para gestión de tareas con autenticación JWT"
     });
 
-    // Configuración para JWT en Swagger
+    // Definición de seguridad JWT
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header usando el esquema Bearer. Ejemplo: 'Bearer {token}'",
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey, // Corregido aquí
+        Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
 
+    // Requerimiento de seguridad
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -99,7 +100,7 @@ builder.Services.AddSwaggerGen(c =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme, // Corregido aquí
+                    Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
                 }
             },
@@ -110,7 +111,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// 9. Configurar pipeline HTTP
+// 9️⃣ Configurar pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -121,12 +122,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowAll");
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

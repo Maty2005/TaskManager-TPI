@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="D:/Lolo/Lolo/aUTN/TP FINAL PROG IV/Proyectos/TaskManager/TaskManager.Domain/TaskManager.Domain.csproj" Id="6ef0b120-b46e-44a6-9d0a-f1be65d7614b" />
+  <Project Path="TaskManager.API/TaskManager.API.csproj" Id="a4ef5296-a922-486d-bfa3-d9f0604a9c2c" />
+  <Project Path="TaskManager.Application/TaskManager.Application.csproj" Id="0fba58aa-d0fa-40a1-8af5-f152347a7092" />
+  <Project Path="TaskManager.Infrastructure/TaskManager.Infrastructure.csproj" Id="309dfac9-141b-455b-9545-c9da0bb2964b" />
+</Solution>

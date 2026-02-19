@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManager.Application.DTOs;
 using TaskManager.Application.Interfaces.IServices;
-
 namespace TaskManager.API.Controllers
 {
     [Route("api/[controller]")]
@@ -12,12 +11,10 @@ namespace TaskManager.API.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _taskService;
-
         public TasksController(ITaskService taskService)
         {
             _taskService = taskService;
         }
-
         private int GetUserId()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -25,7 +22,6 @@ namespace TaskManager.API.Controllers
                 throw new UnauthorizedAccessException("Usuario no autenticado");
             return int.Parse(userIdClaim.Value);
         }
-
         [HttpGet]
         public async Task<IActionResult> GetUserTasks()
         {
@@ -40,7 +36,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al obtener tareas", error = ex.Message });
             }
         }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskById(int id)
         {
@@ -51,7 +46,6 @@ namespace TaskManager.API.Controllers
 
                 if (task == null)
                     return NotFound(new { message = "Tarea no encontrada" });
-
                 return Ok(task);
             }
             catch (Exception ex)
@@ -59,7 +53,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al obtener tarea", error = ex.Message });
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto createTaskDto)
         {
@@ -78,7 +71,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al crear tarea", error = ex.Message });
             }
         }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskDto updateTaskDto)
         {
@@ -101,7 +93,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al actualizar tarea", error = ex.Message });
             }
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {
@@ -120,7 +111,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al eliminar tarea", error = ex.Message });
             }
         }
-
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateTaskStatus(int id, [FromBody] int status)
         {

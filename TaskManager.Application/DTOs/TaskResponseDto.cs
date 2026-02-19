@@ -1,5 +1,5 @@
 ﻿using TaskManager.Domain.Enums;
-
+using TaskStatusEnum = TaskManager.Domain.Enums.TaskItemStatus;
 namespace TaskManager.Application.DTOs
 {
     public class TaskResponseDto
@@ -7,7 +7,7 @@ namespace TaskManager.Application.DTOs
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public TaskManager.Domain.Enums.TaskStatus Status { get; set; }
+        public TaskStatusEnum Status { get; set; }
         public Priority Priority { get; set; }
         public DateTime? DueDate { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace TaskManager.Application.DTOs
 {
     public class LoginDto
@@ -7,7 +6,6 @@ namespace TaskManager.Application.DTOs
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
-
         [Required]
         public string Password { get; set; } = string.Empty;
     }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManager.Application.DTOs;
 using TaskManager.Application.Interfaces.IServices;
-
 namespace TaskManager.API.Controllers
 {
     [Route("api/tasks/{taskId}/comments")]
@@ -12,12 +11,10 @@ namespace TaskManager.API.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly ITaskCommentService _commentService;
-
         public CommentsController(ITaskCommentService commentService)
         {
             _commentService = commentService;
         }
-
         private int GetUserId()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -25,7 +22,6 @@ namespace TaskManager.API.Controllers
                 throw new UnauthorizedAccessException("Usuario no autenticado");
             return int.Parse(userIdClaim.Value);
         }
-
         [HttpGet]
         public async Task<IActionResult> GetTaskComments(int taskId)
         {
@@ -39,7 +35,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al obtener comentarios", error = ex.Message });
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> AddComment(int taskId, [FromBody] CreateCommentDto createCommentDto)
         {
@@ -58,7 +53,6 @@ namespace TaskManager.API.Controllers
                 return StatusCode(500, new { message = "Error al crear comentario", error = ex.Message });
             }
         }
-
         [HttpDelete("~/api/comments/{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {

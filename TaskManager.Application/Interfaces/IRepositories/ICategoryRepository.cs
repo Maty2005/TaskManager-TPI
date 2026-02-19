@@ -1,5 +1,4 @@
 ﻿using TaskManager.Domain.Entities;
-
 namespace TaskManager.Application.Interfaces.IRepositories
 {
     public interface ICategoryRepository : IRepository<Category>

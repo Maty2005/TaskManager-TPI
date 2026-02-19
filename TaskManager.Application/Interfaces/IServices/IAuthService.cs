@@ -1,5 +1,4 @@
 ﻿using TaskManager.Application.DTOs;
-
 namespace TaskManager.Application.Interfaces.IServices
 {
     public interface IAuthService

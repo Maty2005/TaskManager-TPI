@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Interfaces.IServices;
-
 namespace TaskManager.API.Controllers
 {
     [Route("api/[controller]")]
@@ -10,12 +9,10 @@ namespace TaskManager.API.Controllers
     public class QuotesController : ControllerBase
     {
         private readonly IQuoteService _quoteService;
-
         public QuotesController(IQuoteService quoteService)
         {
             _quoteService = quoteService;
         }
-
         [HttpGet("daily")]
         public async Task<IActionResult> GetDailyQuote()
         {
