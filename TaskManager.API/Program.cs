@@ -109,20 +109,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 var app = builder.Build();
 
-// 9️⃣ Configurar pipeline HTTP
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskManager API v1");
-    });
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
