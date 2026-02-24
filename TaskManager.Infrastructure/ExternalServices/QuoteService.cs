@@ -9,7 +9,7 @@ namespace TaskManager.Infrastructure.ExternalServices
         public QuoteService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://api.quotable.io/");
+            _httpClient.BaseAddress = new Uri("https://zenquotes.io/api/random");
         }
         public async Task<string> GetDailyQuoteAsync()
         {
