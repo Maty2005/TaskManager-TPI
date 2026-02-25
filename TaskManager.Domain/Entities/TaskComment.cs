@@ -5,7 +5,6 @@ namespace TaskManager.Domain.Entities
     {
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        // Foreign Keys
         public int TaskId { get; set; }
         public int UserId { get; set; }
         public virtual TaskItem Task { get; set; } = null!;
