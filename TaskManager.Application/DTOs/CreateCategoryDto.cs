@@ -8,7 +8,7 @@ namespace TaskManager.Application.DTOs
         public string Name { get; set; } = string.Empty;
         [StringLength(200)]
         public string Description { get; set; } = string.Empty;
-        [RegularExpression("^#([A-Fa-f0-9]{6})$", ErrorMessage = "Color must be a valid hex color")]
+        [RegularExpression("^#([A-Fa-f0-9]{6})$", ErrorMessage = "El color debe ser un color hsx valido")]
         public string Color { get; set; } = "#3B82F6";
     }
 }
