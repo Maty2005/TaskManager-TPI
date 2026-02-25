@@ -17,23 +17,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2️⃣ Registrar Repositorios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITaskCommentRepository, TaskCommentRepository>();
 
-// 3️⃣ Registrar Servicios de Aplicación
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITaskCommentService, TaskCommentService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-// 4️⃣ Registrar HttpClient para servicio externo
 builder.Services.AddHttpClient<IQuoteService, QuoteService>();
 
-// 5️⃣ Configurar JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["Secret"];
 
@@ -57,7 +53,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// 6️⃣ Configurar CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -68,10 +63,8 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 7️⃣ Agregar Controllers
 builder.Services.AddControllers();
 
-// 8️⃣ Configurar Swagger con soporte JWT
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
