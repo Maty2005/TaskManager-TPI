@@ -13,10 +13,8 @@ namespace TaskManager.Domain.Entities
         public DateTime? DueDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        // Foreign Keys
         public int UserId { get; set; }
         public int? CategoryId { get; set; }
-        // Navigation properties
         public virtual User User { get; set; } = null!;
         public virtual Category? Category { get; set; }
         public virtual ICollection<TaskComment> Comments { get; set; } = new List<TaskComment>();
