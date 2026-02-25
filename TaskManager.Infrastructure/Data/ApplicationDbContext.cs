@@ -71,8 +71,6 @@ namespace TaskManager.Infrastructure.Data
                 .HasForeignKey(e => e.TaskId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
-            // TaskCommentmodelBuilder.Entity<TaskComment>(entity =>
-            // TaskComment
             modelBuilder.Entity<TaskComment>(entity =>
             {
                 entity.ToTable("TaskComments");
@@ -85,7 +83,6 @@ namespace TaskManager.Infrastructure.Data
                 entity.HasIndex(e => e.UserId);
             });
 
-            // Seed Data
             modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Personal", Description = "Tareas personales", Color = "#3B82F6" },
             new Category { Id = 2, Name = "Trabajo", Description = "Tareas relacionadas con el trabajo", Color = "#10B981" },
