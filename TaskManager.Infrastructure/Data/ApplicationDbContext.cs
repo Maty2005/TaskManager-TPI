@@ -16,7 +16,6 @@ namespace TaskManager.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // User
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
@@ -37,7 +36,6 @@ namespace TaskManager.Infrastructure.Data
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
-            // Category
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Categories");
@@ -51,7 +49,6 @@ namespace TaskManager.Infrastructure.Data
                 .HasForeignKey(e => e.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
             });
-            // TaskItem
             modelBuilder.Entity<TaskItem>(entity =>
             {
                 entity.ToTable("Tasks");
