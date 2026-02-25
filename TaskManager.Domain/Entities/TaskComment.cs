@@ -8,7 +8,6 @@ namespace TaskManager.Domain.Entities
         // Foreign Keys
         public int TaskId { get; set; }
         public int UserId { get; set; }
-        // Navigation properties
         public virtual TaskItem Task { get; set; } = null!;
         public virtual User User { get; set; } = null!;
     }
